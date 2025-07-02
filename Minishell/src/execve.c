@@ -6,13 +6,13 @@
 /*   By: wasmaata <wasmaata@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:54:40 by wasmaata          #+#    #+#             */
-/*   Updated: 2025/07/02 06:16:48 by wasmaata         ###   ########.fr       */
+/*   Updated: 2025/07/02 14:49:08 by wasmaata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_get_full_path(char **tab)
+char	*ft_get_full_path(char **tab, char **env)
 {
 	char	**path;
 	char	*full_path;
@@ -20,7 +20,7 @@ char	*ft_get_full_path(char **tab)
 	int		i;
 
 	i = 0;
-	path = ft_split(getenv("PATH"), ':');
+	path = ft_split(env_get("PATH", env), ':');
 	full_path = NULL;
 	while (path[i])
 	{
@@ -49,10 +49,10 @@ int	imp_exec(char **tab, char **env)
 	{
 		if (handle_redirections(tab) == -1)
 			exit(EXIT_FAILURE);
-		if (ft_strncmp(tab[0], "./", 2) == 0)
+		if (ft_strncmp(tab[0], "./", 2) == 0 || ft_strncmp(tab[0], "/", 1) == 0)
 			full_path = tab[0];
 		else
-			full_path = ft_get_full_path(tab);
+			full_path = ft_get_full_path(tab, env);
 		if (!full_path)
 		{
 			fprintf(stderr, "%s: command not found\n", tab[0]);

@@ -6,7 +6,7 @@
 /*   By: wasmaata <wasmaata@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:53:37 by wasmaata          #+#    #+#             */
-/*   Updated: 2025/07/02 00:57:36 by wasmaata         ###   ########.fr       */
+/*   Updated: 2025/07/02 14:54:37 by wasmaata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@ char	*env_get(char *key, char **env)
 	int		i;
 	int		len;
 
-	if (!key || !env)
+	if (!env)
 		return (NULL);
+	if (!key)
+		env_set(key, ft_strdup("\0"), &env);
 	i = 0;
 	len = ft_strlen(key);
 	while (env[i])

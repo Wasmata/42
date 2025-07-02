@@ -6,7 +6,7 @@
 /*   By: wasmaata <wasmaata@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 17:09:51 by wasmaata          #+#    #+#             */
-/*   Updated: 2025/07/02 05:03:52 by wasmaata         ###   ########.fr       */
+/*   Updated: 2025/07/02 19:15:45 by wasmaata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	ft_init(t_token *vars, t_index *index)
 {
 	vars->str = NULL;
+	vars->next = NULL;
 	index->tab = NULL;
 	index->input = NULL;
 	index->cntpipe = 0;
@@ -52,11 +53,12 @@ int	main(int ac, char **av, char **envp)
 
 	(void) ac;
 	(void) av;
+	if (!envp[0])
+		return (1);
 	init_signals_and_env(envp, &index);
+	rl_catch_signals = 0;
 	while (1)
 	{
-		if (!envp[0])
-			return (1);
 		ft_init(&vars, &index);
 		index.input = readline(index.readline);
 		free(index.readline);
